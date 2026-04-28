@@ -3,82 +3,277 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>shop._.maroc7 | متجر الإكسسوارات التقنية</title>
-  
+  <title>SHOP._.MAROC7 | المتجر الرسمي</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Outfit', sans-serif; background: #050508; color: #e8e8ec; margin:0; }
-    .glass-nav { background: rgba(5, 5, 8, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #1a1a2e; }
+    body { font-family: 'Outfit', sans-serif; background: #050a15; color: #e8e8ec; margin: 0; overflow-x: hidden; }
     
-    /* نظام إظهار وإخفاء الصفحات */
-    .page { display: none; }
-    .page.active { display: block; }
+    /* نظام الصفحات الأكيد */
+    .page-section { display: none; }
+    .page-section.active { display: block; animation: slideUp 0.5s ease-out; }
     
-    /* حركة شريط الإعلانات */
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ألوان البراند الجديدة */
+    .text-brand-orange { color: #FF6B00; }
+    .bg-brand-blue { background: #003366; }
+    .bg-brand-orange { background: #FF6B00; }
+    .border-brand-blue { border-color: #003366; }
+
+    /* شريط الإعلانات */
+    .marquee-container { background: #FF6B00; color: white; padding: 10px 0; overflow: hidden; position: sticky; top: 0; z-index: 100; }
+    .marquee-text { display: inline-block; white-space: nowrap; animation: marquee 25s linear infinite; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
     @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-    .animate-marquee { display: inline-block; animation: marquee 20s linear infinite; white-space: nowrap; }
+
+    .nav-glass { background: rgba(5, 10, 21, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,107,0,0.2); }
     
-    .card-hover:hover { border-color: #00ff88; transform: translateY(-5px); transition: 0.3s; }
+    /* تأثيرات البطاقات */
+    .product-card { background: #0a1122; border: 1px solid #1a243a; border-radius: 24px; transition: 0.4s; position: relative; overflow: hidden; }
+    .product-card:hover { transform: translateY(-10px); border-color: #FF6B00; box-shadow: 0 10px 30px rgba(255,107,0,0.15); }
+    
+    .btn-gradient { background: linear-gradient(90deg, #FF6B00, #FF9E00); transition: 0.3s; }
+    .btn-gradient:hover { filter: brightness(1.1); transform: scale(1.05); }
   </style>
 </head>
 <body>
 
-  <div class="w-full bg-[#00ff88] py-2 overflow-hidden sticky top-0 z-[100]">
-    <div class="animate-marquee flex gap-8">
-      <span class="text-[#050508] font-bold text-sm">🚀 توصيل سريع لجميع المدن المغربية</span>
-      <span class="text-[#050508] font-bold text-sm">🔌 شواحن سامسونج أصلية 100%</span>
-      <span class="text-[#050508] font-bold text-sm">⭐ ضمان الجودة من shop._.maroc7</span>
+  <div class="marquee-container">
+    <div class="marquee-text">
+       🚚 توصيل سريع لجميع المدن المغربية — 🔌 شواحن سامسونج أصلية 100% — ⭐ ضمان الجودة من SHOP._.MAROC7 — 🎁 خصم خاص عند طلب قطعتين أو أكثر
     </div>
   </div>
 
-  <nav class="glass-nav sticky top-[36px] z-[90] w-full">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-      <div onclick="showPage('home')" class="flex items-center gap-2 cursor-pointer">
-        <div class="w-8 h-8 rounded-lg bg-[#00ff88] flex items-center justify-center">
-           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-2 10h9l-11 10 2-10H3Z"/></svg>
-        </div>
-        <span class="text-xl font-bold text-[#00ff88]">shop._.maroc7</span>
+  <nav class="nav-glass sticky top-[44px] z-50 w-full">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      
+      <div onclick="navigateTo('home')" class="flex items-center gap-3 cursor-pointer">
+        <img src="https://i.ibb.co/3ykG8v8/WhatsApp-Image-2026-04-11-at-15-31-50.jpg" alt="Logo" class="w-12 h-12 rounded-lg object-cover border border-[#FF6B00]">
+        <span class="text-2xl font-black tracking-tighter text-white">SHOP<span class="text-brand-orange">._.</span>MAROC7</span>
       </div>
 
-      <div class="hidden md:flex items-center gap-6">
-        <button onclick="showPage('home')" class="hover:text-[#00ff88]">الرئيسية</button>
-        <button onclick="showPage('products')" class="hover:text-[#00ff88]">المنتجات</button>
-        <button onclick="showPage('contact')" class="hover:text-[#00ff88]">اتصل بنا</button>
+      <div class="hidden md:flex items-center gap-8 font-bold text-sm">
+        <button onclick="navigateTo('home')" class="hover:text-brand-orange transition">الرئيسية</button>
+        <button onclick="navigateTo('products-page')" class="hover:text-brand-orange transition">المنتجات</button>
+        <button onclick="navigateTo('contact-page')" class="hover:text-brand-orange transition">اتصل بنا</button>
       </div>
 
-      <button onclick="toggleCart(true)" class="relative p-2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <span id="cart-badge" class="absolute -top-1 -right-1 bg-[#00ff88] text-black text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
+      <button onclick="toggleCart(true)" class="relative p-3 bg-white/5 rounded-2xl border border-white/10">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        <span id="cart-badge" class="absolute -top-1 -right-1 bg-brand-orange text-white text-[10px] font-bold w-6 h-6 rounded-full flex items-center justify-center hidden shadow-lg">0</span>
       </button>
     </div>
   </nav>
 
-  <div id="home" class="page active">
-    <section class="max-w-7xl mx-auto px-4 pt-20 pb-20 text-center">
-      <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
-        الجودة الأصلية.<br><span class="text-[#00ff88]">بأفضل الأثمان.</span>
-      </h1>
-      <p class="text-gray-400 text-lg mb-10 max-w-xl mx-auto">متخصصون في شواحن سامسونج الأصلية وإكسسوارات الهواتف الفاخرة.</p>
-      <button onclick="showPage('products')" class="bg-[#00ff88] text-black px-10 py-4 rounded-xl font-bold hover:scale-105 transition shadow-lg shadow-[#00ff8833]">
-        تسوق الآن
-      </button>
-    </section>
-  </div>
-
-  <div id="products" class="page">
-    <section class="max-w-7xl mx-auto px-4 py-16">
-      <h2 class="text-3xl font-bold mb-8 text-center">منتجاتنا</h2>
-      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  <main>
+    <section id="home" class="page-section active">
+      <div class="max-w-7xl mx-auto px-4 pt-24 pb-20 text-center">
+        <div class="inline-block px-4 py-1 rounded-full text-xs font-black mb-8 border border-brand-orange/30 bg-brand-orange/10 text-brand-orange">
+          OFFICIAL STORE 🇲🇦 2026
         </div>
+        <h1 class="text-6xl md:text-8xl font-black mb-8 leading-tight text-white">
+          الجودة الأصلية.<br><span class="text-brand-orange">بأفضل الأثمان.</span>
+        </h1>
+        <p class="text-gray-400 text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
+          نحن في <span class="text-white font-bold">SHOP._.MAROC7</span> نضمن لك الحصول على إكسسوارات تقنية أصلية 100% مع تجربة تسوق مغربية استثنائية.
+        </p>
+        <div class="flex flex-wrap justify-center gap-5">
+          <button onclick="navigateTo('products-page')" class="btn-gradient px-14 py-5 rounded-2xl font-black text-xl text-white shadow-2xl shadow-orange-600/20">
+            تصفح العروض الآن
+          </button>
+        </div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-8 rounded-3xl bg-[#0d1629] border border-white/5 text-center">
+            <h3 class="text-brand-orange font-black text-xl mb-2">توصيل لكل المغرب</h3>
+            <p class="text-gray-500 text-sm">نصل إليك في القنيطرة، الرباط وكافة المدن.</p>
+        </div>
+        <div class="p-8 rounded-3xl bg-[#0d1629] border border-white/5 text-center">
+            <h3 class="text-brand-orange font-black text-xl mb-2">ضمان حقيقي</h3>
+            <p class="text-gray-500 text-sm">استبدال فوري في حال وجود أي عيب مصنعي.</p>
+        </div>
+        <div class="p-8 rounded-3xl bg-[#0d1629] border border-white/5 text-center">
+            <h3 class="text-brand-orange font-black text-xl mb-2">دفع عند الاستلام</h3>
+            <p class="text-gray-500 text-sm">تقة متبادلة.. لا تدفع حتى تتوصل بطلبك.</p>
+        </div>
+      </div>
     </section>
+
+    <section id="products-page" class="page-section">
+      <div class="max-w-7xl mx-auto px-4 py-20">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-black text-white mb-4">كتالوج المنتجات</h2>
+            <div class="w-24 h-1 bg-brand-orange mx-auto rounded-full"></div>
+        </div>
+        
+        <div class="flex flex-wrap justify-center gap-4 mb-16">
+          <button onclick="filterItems('all')" class="px-8 py-3 rounded-xl bg-brand-orange text-white font-black shadow-lg">الكل</button>
+          <button onclick="filterItems('chargers')" class="px-8 py-3 rounded-xl bg-white/5 hover:bg-brand-orange transition font-bold">شواحن</button>
+          <button onclick="filterItems('audio')" class="px-8 py-3 rounded-xl bg-white/5 hover:bg-brand-orange transition font-bold">سماعات</button>
+        </div>
+
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          </div>
+      </div>
+    </section>
+
+    <section id="contact-page" class="page-section">
+      <div class="max-w-4xl mx-auto px-4 py-24 text-center">
+        <h2 class="text-5xl font-black mb-12 text-white italic underline decoration-brand-orange">اتصل بنا</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <a href="https://wa.me/212771737049" target="_blank" class="flex flex-col items-center p-10 bg-[#0a1122] border border-white/5 rounded-[40px] hover:border-brand-orange transition">
+                <div class="w-16 h-16 bg-[#25d366]/20 rounded-full flex items-center justify-center text-[#25d366] mb-4">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">واتساب مباشر</h3>
+                <p class="text-brand-orange font-black text-2xl">0771737049</p>
+            </a>
+            <a href="https://instagram.com/shop._.maroc7" target="_blank" class="flex flex-col items-center p-10 bg-[#0a1122] border border-white/5 rounded-[40px] hover:border-brand-orange transition">
+                <div class="w-16 h-16 bg-pink-500/20 rounded-full flex items-center justify-center text-pink-500 mb-4">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">إنستغرام</h3>
+                <p class="text-pink-500 font-black text-2xl">@shop._.maroc7</p>
+            </a>
+        </div>
+
+        <form id="contact-form" class="bg-[#0a1122] p-12 rounded-[50px] border border-white/5 text-right shadow-3xl">
+          <input type="hidden" name="access_key" value="83029047-dab7-46d7-a0fa-cde6ca83dd8b">
+          <h3 class="text-2xl font-black mb-8 text-white text-center">راسلنا بريدياً ✉️</h3>
+          <div class="space-y-6">
+            <input type="text" name="name" placeholder="اسمك الكامل" required class="w-full p-5 rounded-2xl bg-[#050a15] border border-white/10 outline-none text-white focus:border-brand-orange transition">
+            <input type="email" name="email" placeholder="بريدك الإلكتروني" required class="w-full p-5 rounded-2xl bg-[#050a15] border border-white/10 outline-none text-white focus:border-brand-orange transition">
+            <textarea name="message" placeholder="ماذا يدور في ذهنك؟" rows="4" required class="w-full p-5 rounded-2xl bg-[#050a15] border border-white/10 outline-none text-white resize-none focus:border-brand-orange transition"></textarea>
+            <button type="submit" id="submit-btn" class="w-full py-5 bg-brand-orange text-white font-black rounded-2xl text-xl hover:shadow-[0_0_40px_rgba(255,107,0,0.4)] transition">إرسال الرسالة</button>
+            <p id="form-result" class="text-center font-bold text-sm"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div id="cart-drawer" class="fixed top-0 left-0 h-full w-full sm:w-[450px] bg-[#050a15] z-[200] border-r border-white/10 transition-transform -translate-x-full overflow-y-auto">
+    <div class="p-10 h-full flex flex-col">
+      <div class="flex justify-between items-center mb-12">
+        <h3 class="text-3xl font-black text-white italic">سلة الطلبات</h3>
+        <button onclick="toggleCart(false)" class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center font-bold text-2xl">&times;</button>
+      </div>
+      <div id="cart-items" class="flex-1 space-y-6 overflow-auto pr-2">
+        </div>
+      <div class="border-t border-white/10 pt-10">
+        <div class="flex justify-between font-black text-2xl mb-10">
+          <span class="text-gray-500 italic">المجموع:</span>
+          <span id="cart-total" class="text-brand-orange">0 DH</span>
+        </div>
+        <button onclick="orderWA()" class="w-full py-6 bg-[#25d366] text-white font-black rounded-3xl text-2xl shadow-xl shadow-[#25d36622] hover:scale-[1.02] transition">
+           تأكيد الطلب عبر واتساب 💬
+        </button>
+      </div>
+    </div>
   </div>
 
-  <div id="contact" class="page">
-    <section class="max-w-xl mx-auto px-4 py-20 text-center">
-      <h2 class="text-3xl font-bold mb-8 text-[#00ff88]">تواصل معنا</h2>
-      <div class="bg-[#0d0d14] p-8 rounded-2xl border border-[#1a1a2e]">
-        <p class="mb-6">نحن متاحون للرد على طلباتكم 24/7</p>
-        <a href="https://wa.me/212771737049" class="flex items-center justify-center gap-3 w-full py-4 bg-[#25d366] text-white rounded-xl font-bold text-lg mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4
+  <a href="https://wa.me/212771737049" target="_blank" class="fixed bottom-10 left-10 bg-[#25d366] w-20 h-20 rounded-[30px] flex items-center justify-center z-[100] shadow-2xl hover:scale-110 transition rotate-[-5deg]">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-11.7 1 1 0 0 1 .5.1l1.1.5a1 1 0 0 1 .5.8v.1l-.1.1a1 1 0 0 1-.5.1l-1.1-.5a1 1 0 0 1-.5-.8V4a1 1 0 0 1 .5-.1h.1a1 1 0 0 1 .5.1h.1z"></path></svg>
+  </a>
+
+  <script>
+    const products = [
+      { id: 1, name: "شاحن سامسونج 25W أصلي", price: 150, category: "chargers", img: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=400", desc: "شحن سريع فائق السرعة لجميع أجهزة جالاكسي." },
+      { id: 2, name: "سماعات Pink Buds Pro", price: 240, category: "audio", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400", desc: "صوت نقي، تصميم مريح وبطارية تدوم طويلاً." },
+      { id: 3, name: "كابل Type-C أصلي 1.5M", price: 80, category: "chargers", img: "https://images.unsplash.com/photo-1586944281985-0618b7fe5b57?w=400", desc: "كابل متين لنقل البيانات والشحن السريع." },
+      { id: 4, name: "شاحن سامسونج 45W فائق", price: 280, category: "chargers", img: "https://i.ibb.co/6y4tWvJ/charger-45w.jpg", desc: "الأداء الأقوى لهواتف S24 Ultra و S23." },
+      { id: 5, name: "سماعات Pro Buds White", price: 320, category: "audio", img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400", desc: "عزل ضجيج احترافي وتصميم عصري." }
+    ];
+
+    let cart = [];
+
+    // نظام التنقل
+    function navigateTo(id) {
+      document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo(0,0);
+    }
+
+    // عرض المنتجات
+    function render(list = products) {
+      const grid = document.getElementById('products-grid');
+      grid.innerHTML = list.map(p => `
+        <div class="product-card p-6 text-right flex flex-col h-full fade-in">
+          <div class="w-full h-64 bg-gray-900 rounded-[20px] mb-6 overflow-hidden">
+            <img src="${p.img}" class="w-full h-full object-cover">
+          </div>
+          <h3 class="font-black text-2xl mb-3 text-white italic">${p.name}</h3>
+          <p class="text-gray-500 text-sm mb-6 flex-1">${p.desc}</p>
+          <div class="mt-auto flex justify-between items-center">
+            <span class="text-3xl font-black text-brand-orange italic">${p.price} DH</span>
+            <button onclick="addToCart(${p.id})" class="bg-brand-orange text-white p-4 rounded-2xl hover:rotate-12 transition shadow-lg shadow-orange-600/30">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addToCart(id) {
+      cart.push(products.find(p => p.id === id));
+      updateUI();
+      toggleCart(true);
+    }
+
+    function updateUI() {
+      const badge = document.getElementById('cart-badge');
+      badge.textContent = cart.length;
+      badge.classList.toggle('hidden', cart.length === 0);
+      
+      const total = cart.reduce((s,i) => s + i.price, 0);
+      document.getElementById('cart-total').textContent = total + " DH";
+      
+      document.getElementById('cart-items').innerHTML = cart.map((i, idx) => `
+        <div class="flex items-center gap-5 bg-white/5 p-5 rounded-[25px] border border-white/5">
+          <img src="${i.img}" class="w-16 h-16 rounded-xl object-cover">
+          <div class="flex-1">
+            <p class="font-bold text-white text-sm">${i.name}</p>
+            <p class="text-brand-orange font-black">${i.price} DH</p>
+          </div>
+          <button onclick="removeFromCart(${idx})" class="text-red-500 p-2 font-black text-2xl hover:scale-125 transition">&times;</button>
+        </div>
+      `).join('');
+    }
+
+    function removeFromCart(idx) { cart.splice(idx, 1); updateUI(); }
+    function toggleCart(s) { document.getElementById('cart-drawer').style.transform = s ? 'translateX(0)' : 'translateX(-100%)'; }
+    function filterItems(c) { render(c === 'all' ? products : products.filter(p => p.category === c)); }
+    
+    function orderWA() {
+      if(cart.length === 0) return alert('سلتك فارغة!');
+      const itemsStr = cart.map(i => i.name).join(' + ');
+      const total = cart.reduce((s,i) => s + i.price, 0);
+      const message = `السلام عليكم متجر SHOP._.MAROC7، أريد طلب:\nالمنتجات: ${itemsStr}\nالمجموع: ${total} DH\nيرجى تأكيد الطلب.`;
+      window.open("https://wa.me/212771737049?text=" + encodeURIComponent(message));
+    }
+
+    // منطق الإيميل
+    const form = document.getElementById('contact-form');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const res = document.getElementById('form-result');
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      res.textContent = "جاري الإرسال...";
+      fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(form) })
+      .then(r => r.json()).then(data => {
+        if(data.success) {
+            res.textContent = "✅ تم استلام رسالتك، شكراً لك!";
+            res.style.color = "#00ff88";
+            form.reset();
+        } else { res.textContent = "❌ فشل الإرسال، حاول لاحقاً."; res.style.color = "#ff4d4d"; }
+        btn.disabled = false;
+      });
+    });
+
+    window.onload = render;
+  </script>
+</body>
+</html>
