@@ -5,129 +5,155 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SHOP._.MAROC7 | المتجر الرسمي</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
-    body { font-family: system-ui, -apple-system, sans-serif; background: #050a15; color: #e8e8ec; margin: 0; }
-    .page-section { display: none; }
-    .page-section.active { display: block !important; }
-    .nav-glass { background: rgba(5, 10, 21, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,107,0,0.3); }
-    .marquee { background: #FF6B00; color: white; padding: 10px; overflow: hidden; white-space: nowrap; font-weight: bold; }
-    .marquee-content { display: inline-block; animation: scroll 20s linear infinite; }
-    @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+    body { font-family: 'Outfit', sans-serif; background: #050a15; color: #e8e8ec; margin: 0; overflow-x: hidden; }
+    
+    /* نظام الصفحات المضمون */
+    .page-section { display: none; width: 100%; min-height: 80vh; }
+    .page-section.active { display: flex !important; flex-direction: column; align-items: center; }
+
+    /* شريط الإعلانات */
+    .marquee-container { background: #FF6B00; color: white; padding: 10px 0; overflow: hidden; position: sticky; top: 0; z-index: 100; font-weight: bold; }
+    .marquee-text { display: inline-block; white-space: nowrap; animation: marquee 25s linear infinite; }
+    @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+    /* الهيدر */
+    .nav-glass { background: rgba(5, 10, 21, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,107,0,0.3); position: sticky; top: 44px; z-index: 90; }
+    
     .product-card { background: #0a1122; border: 1px solid #1a243a; border-radius: 20px; transition: 0.3s; }
+    .product-card:hover { border-color: #FF6B00; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255,107,0,0.2); }
   </style>
 </head>
 <body>
 
-  <div class="marquee sticky top-0 z-[100]">
-    <div class="marquee-content">🚀 توصيل سريع لكل المغرب — 🔌 شواحن سامسونج أصلية 100% — ⭐ ضمان الجودة من SHOP._.MAROC7</div>
+  <div class="marquee-container">
+    <div class="marquee-text">🚀 توصيل سريع لكل المغرب — 🔌 شواحن سامسونج أصلية 100% — ⭐ ضمان الجودة من SHOP._.MAROC7</div>
   </div>
 
-  <nav class="nav-glass sticky top-[44px] z-50 w-full">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-      <div onclick="goTo('home')" class="flex items-center gap-3 cursor-pointer">
-        <img src="https://i.ibb.co/3ykG8v8/WhatsApp-Image-2026-04-11-at-15-31-50.jpg" class="w-10 h-10 rounded border border-[#FF6B00]">
+  <nav class="nav-glass w-full">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div onclick="navigateTo('home')" class="flex items-center gap-3 cursor-pointer">
+        <div class="w-10 h-10 rounded-lg bg-[#FF6B00] flex items-center justify-center font-bold text-black text-xl">S</div>
         <span class="text-xl font-black text-white">SHOP<span class="text-[#FF6B00]">._.</span>MAROC7</span>
       </div>
-      <div class="hidden md:flex items-center gap-6 font-bold">
-        <button onclick="goTo('home')" class="hover:text-[#FF6B00]">الرئيسية</button>
-        <button onclick="goTo('products')" class="hover:text-[#FF6B00]">المنتجات</button>
-        <button onclick="goTo('contact')" class="hover:text-[#FF6B00]">اتصل بنا</button>
+
+      <div class="hidden md:flex items-center gap-6 font-bold text-sm">
+        <button onclick="navigateTo('home')" class="hover:text-[#FF6B00] transition">الرئيسية</button>
+        <button onclick="navigateTo('products-page')" class="hover:text-[#FF6B00] transition">المنتجات</button>
+        <button onclick="navigateTo('contact-page')" class="hover:text-[#FF6B00] transition">اتصل بنا</button>
       </div>
-      <button onclick="openCart()" class="relative p-2 bg-white/5 rounded-lg border border-white/10">
-        🛒 <span id="cart-badge" class="absolute -top-1 -right-1 bg-[#FF6B00] text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
+
+      <button onclick="toggleCart(true)" class="relative p-2 bg-white/5 rounded-xl border border-white/10 text-white">
+        🛒 <span id="cart-badge" class="absolute -top-2 -right-2 bg-[#FF6B00] text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
       </button>
     </div>
   </nav>
 
-  <main id="home" class="page-section active">
-    <div class="max-w-7xl mx-auto px-4 pt-24 pb-20 text-center">
-      <h1 class="text-5xl md:text-7xl font-black mb-8 leading-tight">الجودة الأصلية.<br><span class="text-[#FF6B00]">بأفضل الأثمان.</span></h1>
-      <p class="text-gray-400 text-lg mb-10">متجرك الموثوق لإكسسوارات سامسونج الأصلية بالمغرب.</p>
-      <button onclick="goTo('products')" class="bg-[#FF6B00] text-white px-12 py-4 rounded-xl font-bold text-lg hover:scale-105 transition">تسوق الآن</button>
-    </div>
-  </main>
+  <main class="w-full">
+    
+    <section id="home" class="page-section active pt-20 px-4 text-center">
+      <h1 class="text-5xl md:text-7xl font-black mb-8 leading-tight text-white italic">الجودة الأصلية.<br><span class="text-[#FF6B00]">بأفضل الأثمان.</span></h1>
+      <p class="text-gray-400 text-lg mb-10 max-w-xl mx-auto italic">SHOP._.MAROC7: متجركم الموثوق لإكسسوارات سامسونج الأصلية في المغرب.</p>
+      <button onclick="navigateTo('products-page')" class="bg-[#FF6B00] px-12 py-4 rounded-2xl font-black text-lg text-white hover:scale-105 transition shadow-2xl shadow-[#FF6B0044]">ابدأ التسوق</button>
+    </section>
 
-  <main id="products" class="page-section">
-    <div class="max-w-7xl mx-auto px-4 py-16">
-      <h2 class="text-3xl font-bold mb-10 text-center">منتجاتنا</h2>
-      <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-    </div>
-  </main>
-
-  <main id="contact" class="page-section">
-    <div class="max-w-2xl mx-auto px-4 py-16 text-center">
-      <h2 class="text-3xl font-bold mb-10 text-[#FF6B00]">تواصل معنا</h2>
-      <div class="flex flex-col gap-4 mb-10">
-        <a href="https://wa.me/212771737049" target="_blank" class="p-4 bg-[#25d366] text-white rounded-xl font-bold">واتساب: 0771737049</a>
-        <a href="https://instagram.com/shop._.maroc7" target="_blank" class="p-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-bold">إنستغرام: @shop._.maroc7</a>
+    <section id="products-page" class="page-section pt-10 px-4">
+      <div class="max-w-7xl mx-auto w-full">
+        <h2 class="text-3xl font-black mb-10 text-center text-[#FF6B00]">منتجاتنا المختارة</h2>
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-right"></div>
       </div>
-      <form id="emailForm" class="bg-[#0a1122] p-8 rounded-2xl border border-white/10 text-right">
-        <input type="hidden" name="access_key" value="83029047-dab7-46d7-a0fa-cde6ca83dd8b">
-        <div class="space-y-4">
-          <input type="text" name="name" placeholder="الاسم الكامل" required class="w-full p-4 rounded-lg bg-[#050a15] border border-white/10 text-white outline-none">
-          <input type="email" name="email" placeholder="بريدك الإلكتروني" required class="w-full p-4 rounded-lg bg-[#050a15] border border-white/10 text-white outline-none">
-          <textarea name="message" placeholder="رسالتك..." rows="4" required class="w-full p-4 rounded-lg bg-[#050a15] border border-white/10 text-white outline-none"></textarea>
-          <button type="submit" class="w-full py-4 bg-[#FF6B00] text-white font-bold rounded-lg">إرسال للإيميل</button>
-          <p id="res" class="text-center mt-3 font-bold"></p>
+    </section>
+
+    <section id="contact-page" class="page-section pt-10 px-4">
+      <div class="max-w-2xl mx-auto w-full text-center">
+        <h2 class="text-3xl font-black mb-10 text-white italic underline decoration-[#FF6B00]">تواصل معنا</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+            <a href="https://wa.me/212771737049" target="_blank" class="p-5 bg-[#25d366] text-white rounded-2xl font-black text-center transition hover:scale-105">واتساب: 0771737049</a>
+            <a href="https://instagram.com/shop._.maroc7" target="_blank" class="p-5 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-2xl font-black text-center transition hover:scale-105">إنستغرام</a>
         </div>
-      </form>
-    </div>
+        <form id="contact-form" class="bg-[#0a1122] p-8 rounded-[30px] border border-white/5 text-right shadow-2xl">
+          <input type="hidden" name="access_key" value="83029047-dab7-46d7-a0fa-cde6ca83dd8b">
+          <div class="space-y-4">
+            <input type="text" name="name" placeholder="الاسم الكامل" required class="w-full p-4 rounded-xl bg-[#050a15] border border-white/10 text-white outline-none focus:border-[#FF6B00]">
+            <input type="email" name="email" placeholder="بريدك الإلكتروني" required class="w-full p-4 rounded-xl bg-[#050a15] border border-white/10 text-white outline-none focus:border-[#FF6B00]">
+            <textarea name="message" placeholder="اكتب رسالتك أو طلبك هنا..." rows="4" required class="w-full p-4 rounded-xl bg-[#050a15] border border-white/10 text-white outline-none focus:border-[#FF6B00] resize-none"></textarea>
+            <button type="submit" id="submit-btn" class="w-full py-4 bg-[#FF6B00] text-white font-bold rounded-xl hover:opacity-90 transition">إرسال للإيميل</button>
+            <p id="form-result" class="text-center mt-3 font-bold text-sm"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+
   </main>
 
-  <div id="cart" class="fixed top-0 left-0 h-full w-full sm:w-80 bg-[#050a15] z-[200] border-r border-white/10 transition-transform -translate-x-full p-6">
-    <div class="flex justify-between items-center mb-8 font-bold"><span>سلة المشتريات</span><button onclick="closeCart()">&times;</button></div>
-    <div id="items" class="space-y-4 mb-8 overflow-auto max-h-[60%]"></div>
-    <div class="border-t border-white/10 pt-4">
-      <div class="flex justify-between font-bold mb-6 text-[#FF6B00]"><span>المجموع:</span><span id="total">0 DH</span></div>
-      <button onclick="orderWA()" class="w-full py-4 bg-[#25d366] text-white font-bold rounded-xl">طلب عبر واتساب</button>
+  <div id="cart-drawer" class="fixed top-0 left-0 h-full w-full sm:w-80 bg-[#050a15] z-[200] border-r border-white/10 transition-transform -translate-x-full p-8 flex flex-col shadow-2xl">
+    <div class="flex justify-between items-center mb-8 text-white font-bold"><h3 class="text-xl italic">سلة الطلبات</h3><button onclick="toggleCart(false)" class="text-3xl">&times;</button></div>
+    <div id="cart-items" class="flex-1 overflow-auto space-y-4 text-white"></div>
+    <div class="border-t border-white/10 pt-6">
+      <div class="flex justify-between font-black text-xl mb-6 text-[#FF6B00]"><span>المجموع:</span><span id="cart-total">0 DH</span></div>
+      <button onclick="orderWA()" class="w-full py-4 bg-[#25d366] text-white font-bold rounded-xl shadow-lg">طلب عبر واتساب 💬</button>
     </div>
   </div>
 
   <script>
-    const data = [
+    const products = [
       { id: 1, name: "شاحن سامسونج 25W أصلي", price: 150, img: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=400" },
-      { id: 2, name: "سماعات Pink Buds Pro", price: 240, img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" }
+      { id: 2, name: "سماعات Pink Buds Pro", price: 240, img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" },
+      { id: 3, name: "كابل Type-C سامسونج", price: 80, img: "https://images.unsplash.com/photo-1586944281985-0618b7fe5b57?w=400" }
     ];
     let cart = [];
 
-    // وظيفة التنقل
-    function goTo(id) {
-      document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+    function navigateTo(id) {
+      const allPages = document.querySelectorAll('.page-section');
+      allPages.forEach(p => p.classList.remove('active'));
+      const target = document.getElementById(id);
+      if(target) target.classList.add('active');
       window.scrollTo(0,0);
     }
 
     function render() {
-      const g = document.getElementById('grid');
-      g.innerHTML = data.map(p => `
-        <div class="product-card p-5 text-right flex flex-col h-full">
-          <img src="${p.img}" class="w-full h-48 object-cover rounded-xl mb-4">
-          <h3 class="font-bold text-lg mb-2 text-white">${p.name}</h3>
+      const grid = document.getElementById('products-grid');
+      grid.innerHTML = products.map(p => `
+        <div class="product-card p-5 flex flex-col h-full">
+          <img src="${p.img}" class="w-full h-48 object-cover rounded-2xl mb-4 bg-gray-900">
+          <h3 class="font-bold text-lg mb-2 text-white italic">${p.name}</h3>
           <div class="mt-auto flex justify-between items-center">
-            <span class="text-xl font-bold text-[#FF6B00]">${p.price} DH</span>
-            <button onclick="add(${p.id})" class="bg-[#FF6B00] text-white px-4 py-2 rounded-lg font-bold">أضف</button>
+            <span class="text-xl font-black text-[#FF6B00] italic">${p.price} DH</span>
+            <button onclick="addToCart(${p.id})" class="bg-[#FF6B00] text-white px-4 py-2 rounded-lg font-bold hover:scale-110 transition shadow-lg">أضف</button>
           </div>
         </div>`).join('');
     }
 
-    function add(id) { cart.push(data.find(p => p.id === id)); update(); openCart(); }
-    function update() {
+    function addToCart(id) { cart.push(products.find(p => p.id === id)); updateUI(); toggleCart(true); }
+    function updateUI() {
       document.getElementById('cart-badge').textContent = cart.length;
       document.getElementById('cart-badge').classList.toggle('hidden', cart.length === 0);
-      document.getElementById('total').textContent = cart.reduce((s,i) => s + i.price, 0) + " DH";
-      document.getElementById('items').innerHTML = cart.map((i, idx) => `
-        <div class="flex justify-between bg-white/5 p-3 rounded-lg text-sm"><span>${i.name}</span><button onclick="remove(${idx})" class="text-red-500">×</button></div>`).join('');
+      document.getElementById('cart-total').textContent = cart.reduce((s,i) => s + i.price, 0) + " DH";
+      document.getElementById('cart-items').innerHTML = cart.map((i, idx) => `
+        <div class="flex justify-between items-center bg-white/5 p-3 rounded-xl text-sm border border-white/5">
+          <span>${i.name}</span>
+          <button onclick="remove(${idx})" class="text-red-500 font-bold text-xl">&times;</button>
+        </div>`).join('');
     }
-    function remove(idx) { cart.splice(idx, 1); update(); }
-    function openCart() { document.getElementById('cart').style.transform = 'translateX(0)'; }
-    function closeCart() { document.getElementById('cart').style.transform = 'translateX(-100%)'; }
-    function orderWA() { window.open("https://wa.me/212771737049?text=" + encodeURIComponent("طلب من SHOP._.MAROC7: " + cart.map(i=>i.name).join(' + '))); }
+    function remove(idx) { cart.splice(idx, 1); updateUI(); }
+    function toggleCart(s) { document.getElementById('cart-drawer').style.transform = s ? 'translateX(0)' : 'translateX(-100%)'; }
+    
+    function orderWA() {
+      if(cart.length === 0) return alert('السلة فارغة!');
+      const msg = encodeURIComponent("طلب جديد من SHOP._.MAROC7:\n" + cart.map(i=>i.name).join(' + ') + "\nالمجموع: " + cart.reduce((s,i)=>s+i.price,0) + " DH");
+      window.open("https://wa.me/212771737049?text=" + msg);
+    }
 
-    document.getElementById('emailForm').onsubmit = function(e) {
+    document.getElementById('contact-form').onsubmit = function(e) {
       e.preventDefault();
-      document.getElementById('res').innerText = "جاري الإرسال...";
+      const res = document.getElementById('form-result');
+      res.textContent = "جاري الإرسال...";
       fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(this) })
-      .then(r => r.json()).then(d => { if(d.success) { document.getElementById('res').innerText = "✅ تم الإرسال!"; this.reset(); } });
+      .then(r => r.json()).then(data => {
+        if(data.success) { res.textContent = "✅ تم الإرسال بنجاح!"; res.style.color = "#00ff88"; this.reset(); }
+        else { res.textContent = "❌ فشل الإرسال."; res.style.color = "#ff4d4d"; }
+      });
     };
 
     window.onload = render;
