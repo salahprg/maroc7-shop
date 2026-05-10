@@ -3,56 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MARBOHA TECH | Ultra Store 2026</title>
+  <title>MARBOHA TECH | Ultra Premium Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   
   <style>
-    :root { --apple-blue: #0071e3; --ios-bg: #ffffff; --ios-text: #1d1d1f; }
-    .dark-mode { --ios-bg: #000000; --ios-text: #ffffff; }
+    :root { --apple-blue: #0071e3; --ios-bg: #ffffff; }
+    .dark-mode { --ios-bg: #000000; }
 
-    body { font-family: 'Montserrat', sans-serif; background-color: var(--ios-bg); color: var(--ios-text); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); margin: 0; overflow-x: hidden; }
+    body { font-family: 'Montserrat', sans-serif; background-color: var(--ios-bg); color: #1d1d1f; transition: 0.5s; margin: 0; overflow-x: hidden; }
+    .dark-mode { color: #ffffff; }
 
-    /* 1. القائمة الجانبية المستوحاة من iOS 26 */
-    #sidebar { 
-        position: fixed; top: 0; left: 0; width: 320px; height: 100%; 
-        background: rgba(var(--ios-bg), 0.8); backdrop-filter: blur(40px) saturate(200%);
-        z-index: 4000; transform: translateX(-100%); transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        border-right: 1px solid rgba(125, 125, 125, 0.1); padding: 40px;
+    /* 1. واجهة الهيرو الاحترافية كما في الصورة */
+    .hero-section {
+      height: 85vh;
+      background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.1)), 
+                  url('Screenshot 2026-05-08 220005.jpg'); /* الصورة التي اخترتها */
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 12vw, 8rem);
+      font-weight: 900;
+      font-style: italic;
+      color: #000;
+      line-height: 0.8;
+      text-transform: uppercase;
+      letter-spacing: -5px;
+      z-index: 10;
+    }
+
+    /* 2. الهيدر الزجاجي المطور */
+    .apple-nav { 
+      background: rgba(255, 255, 255, 0.8); 
+      backdrop-filter: blur(20px) saturate(180%); 
+      position: fixed; top: 0; width: 100%; z-index: 1000; height: 65px; 
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    /* 3. القائمة الجانبية الذكية (Three Dots Playlist) */
+    #sidebar {
+      position: fixed; top: 0; left: 0; width: 320px; height: 100%; 
+      background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(30px);
+      z-index: 4000; transform: translateX(-100%); transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 20px 0 60px rgba(0,0,0,0.1); padding: 40px;
     }
     #sidebar.open { transform: translateX(0); }
-    .nav-item { display: flex; align-items: center; gap: 15px; padding: 15px; border-radius: 20px; transition: 0.3s; font-weight: 700; font-size: 13px; margin-bottom: 8px; }
-    .nav-item:hover { background: rgba(0, 113, 227, 0.1); color: var(--apple-blue); }
 
-    /* 2. الهيدر الذكي */
-    .apple-nav { 
-      background: rgba(var(--ios-bg), 0.7); backdrop-filter: blur(20px); 
-      position: fixed; top: 0; width: 100%; z-index: 1000; height: 60px; 
-      border-bottom: 1px solid rgba(125, 125, 125, 0.1);
+    /* 4. نظام الفئات الذكي */
+    .cat-btn { 
+      padding: 10px 25px; border-radius: 50px; font-weight: 900; font-size: 10px; 
+      text-transform: uppercase; transition: 0.3s; border: 1px solid #eee;
     }
-
-    /* 3. نظام الفئات */
-    .cat-btn { padding: 10px 25px; border-radius: 50px; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; border: 1px solid rgba(125, 125, 125, 0.1); }
     .cat-btn.active { background: #000; color: #fff; border-color: #000; }
-    .dark-mode .cat-btn.active { background: #fff; color: #000; border-color: #fff; }
 
-    /* 4. صفحة التواصل Hub */
-    .contact-card { background: var(--ios-bg); border: 1px solid rgba(125, 125, 125, 0.1); border-radius: 35px; padding: 30px; transition: 0.4s; }
-    .contact-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+    /* 5. كروت المنتجات */
+    .product-card {
+      background: #fff; border-radius: 40px; padding: 25px; transition: 0.5s;
+      border: 1px solid #f8f8f8; cursor: pointer; text-align: center;
+    }
+    .product-card:hover { transform: translateY(-10px); border-color: var(--apple-blue); box-shadow: 0 30px 60px rgba(0,0,0,0.05); }
 
-    /* 5. المنتجات */
-    .view { display: none; width: 100%; min-height: 100vh; animation: iosSlide 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
-    .view.active { display: block !important; }
-    @keyframes iosSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-    .btn-apple { background: var(--apple-blue); color: white; border-radius: 50px; padding: 16px 40px; font-weight: 700; transition: 0.3s; }
-    #cart-drawer { position: fixed; top: 0; right: 0; width: 380px; height: 100%; background: var(--ios-bg); z-index: 4000; transform: translateX(100%); transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -20px 0 60px rgba(0,0,0,0.1); }
+    /* 6. السلة الجانبية */
+    #cart-drawer {
+      position: fixed; top: 0; right: 0; width: 380px; height: 100%; 
+      background: #fff; z-index: 4000; transform: translateX(100%);
+      transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -20px 0 60px rgba(0,0,0,0.1);
+    }
     #cart-drawer.open { transform: translateX(0); }
-    
-    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); z-index: 3500; display: none; }
+
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(8px); z-index: 3500; display: none; }
     .overlay.active { display: block; }
 
-    ::-webkit-scrollbar { width: 0; }
+    .btn-apple { background: var(--apple-blue); color: white; border-radius: 50px; padding: 15px 40px; font-weight: 700; transition: 0.3s; }
   </style>
 </head>
 <body id="body">
@@ -61,48 +91,38 @@
 
   <div id="sidebar">
     <div class="flex justify-between items-center mb-16 px-4">
-        <h3 class="font-black italic text-xl text-blue-600">MT PLAYLIST</h3>
+        <h3 class="font-black italic text-xl text-blue-600">PLAYLIST</h3>
         <button onclick="closeAll()" class="text-4xl opacity-20">&times;</button>
     </div>
-    <nav class="flex flex-col">
-        <button onclick="go('home-view'); closeAll()" class="nav-item">
-            <span>🏠</span> ACCUEIL PRINCIPAL
-        </button>
-        <button onclick="go('support-view'); closeAll()" class="nav-item">
-            <span>🛠️</span> CENTRE DE SUPPORT
-        </button>
-        <div class="h-[1px] bg-gray-100 dark:bg-white/10 my-6"></div>
-        <div class="px-4 mb-6">
-            <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-4">Catégories Rapides</p>
-            <button onclick="filterItems('all'); closeAll()" class="block text-xs font-bold mb-3 hover:text-blue-600 transition">📦 Tous les produits</button>
-            <button onclick="filterItems('Power'); closeAll()" class="block text-xs font-bold mb-3 hover:text-blue-600 transition">⚡ Chargeurs & Power</button>
-            <button onclick="filterItems('Audio'); closeAll()" class="block text-xs font-bold mb-3 hover:text-blue-600 transition">🎧 Audio & Earbuds</button>
-        </div>
-        <div class="mt-auto p-6 bg-blue-50 dark:bg-blue-900/20 rounded-3xl">
-            <p class="text-[9px] font-black text-blue-600 uppercase mb-2">Besoin d'aide ?</p>
-            <p class="text-xs font-bold">+212 771-737049</p>
-        </div>
+    <nav class="flex flex-col gap-8">
+        <button onclick="go('home-view'); closeAll()" class="text-left font-black text-xs tracking-widest hover:text-blue-600">🏠 ACCUEIL</button>
+        <button onclick="go('support-view'); closeAll()" class="text-left font-black text-xs tracking-widest hover:text-blue-600">🛠️ SUPPORT CLIENT</button>
+        <div class="h-[1px] bg-gray-100 my-4"></div>
+        <p class="text-[10px] font-black text-gray-400 uppercase">Contact WhatsApp</p>
+        <p class="font-bold">+212 771-737049</p>
     </nav>
   </div>
 
   <div id="cart-drawer" class="flex flex-col">
-    <div class="p-8 border-b flex justify-between items-center"><h3 class="font-black italic text-xl">VOTRE SAC</h3><button onclick="closeAll()" class="text-4xl opacity-20">&times;</button></div>
-    <div id="cart-items" class="flex-1 overflow-y-auto p-8 space-y-6"></div>
-    <div class="p-10 border-t bg-gray-50 dark:bg-zinc-900 rounded-t-[50px]">
-        <div class="flex justify-between items-center mb-8"><span class="font-bold opacity-50 uppercase text-xs">Sous-total</span><span id="total-price" class="text-3xl font-black">0 DH</span></div>
-        <button onclick="checkout()" class="w-full py-6 btn-apple uppercase tracking-widest text-[10px]">Passer la commande</button>
+    <div class="p-10 border-b flex justify-between items-center"><h3 class="font-black italic text-xl">VOTRE SAC</h3><button onclick="closeAll()" class="text-4xl opacity-20">&times;</button></div>
+    <div id="cart-items" class="flex-1 overflow-y-auto p-10 space-y-6"></div>
+    <div class="p-10 border-t bg-gray-50">
+        <div class="flex justify-between mb-8"><span class="font-bold opacity-40 uppercase text-xs">Total</span><span id="total-price" class="text-3xl font-black">0 DH</span></div>
+        <button onclick="checkout()" class="w-full py-6 btn-apple text-xs uppercase font-black">Commander WhatsApp 💬</button>
     </div>
   </div>
 
   <nav class="apple-nav px-8 flex items-center justify-between">
-    <button onclick="toggleSidebar(true)" class="p-2 hover:bg-gray-100 dark:hover:bg-white/5 rounded-2xl transition">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/></svg>
+    <button onclick="toggleSidebar(true)" class="p-2 bg-gray-50 rounded-2xl transition">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/></svg>
     </button>
-    <div onclick="go('home-view')" class="flex items-center gap-3 cursor-pointer absolute left-1/2 -translate-x-1/2">
-        <div class="bg-black text-white px-2 py-1 rounded-lg font-black text-[11px]">MT</div>
-        <span class="text-xs font-black italic uppercase tracking-tighter">MARBOHA <span class="text-blue-600">TECH</span></span>
+    
+    <div onclick="go('home-view')" class="flex flex-col items-center cursor-pointer">
+        <span class="text-[9px] font-black tracking-[0.4em] uppercase opacity-50">MARBOHA</span>
+        <span class="text-sm font-black italic uppercase tracking-tighter">TECH</span>
     </div>
-    <div class="flex items-center gap-5">
+
+    <div class="flex items-center gap-4">
         <button onclick="toggleTheme()" class="text-xl">🌓</button>
         <button onclick="toggleCart(true)" class="relative p-2">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
@@ -111,64 +131,41 @@
     </div>
   </nav>
 
-  <div id="home-view" class="view active pt-10">
-    <section class="h-[70vh] flex flex-col justify-center items-center text-center px-6 relative bg-black overflow-hidden">
-        <img src="Screenshot 2026-05-08 220005.jpg" class="absolute inset-0 w-full h-full object-cover opacity-60">
-        <div class="z-10">
-            <h1 class="text-6xl md:text-9xl font-black italic tracking-tighter text-white mb-4">MARBOHA</h1>
-            <p class="text-blue-400 font-bold text-xs tracking-[1em] mb-12 uppercase">Premium Store</p>
-            <button onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})" class="btn-apple">Explorer</button>
-        </div>
+  <div id="home-view" class="view active">
+    <section class="hero-section">
+      <h1 class="hero-title">MARBOHA<br>TECH</h1>
+      <button onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})" class="mt-12 btn-apple uppercase text-[11px] tracking-widest shadow-2xl">Explorer le store</button>
     </section>
 
     <div id="catalog" class="max-w-7xl mx-auto py-24 px-8">
         <div class="flex gap-4 mb-16 overflow-x-auto pb-4">
-            <button onclick="filterItems('all')" class="cat-btn active" id="cat-all">Tout</button>
-            <button onclick="filterItems('Power')" class="cat-btn" id="cat-Power">Chargeurs</button>
-            <button onclick="filterItems('Audio')" class="cat-btn" id="cat-Audio">Audio</button>
-            <button onclick="filterItems('Watch')" class="cat-btn" id="cat-Watch">Séries Watch</button>
+            <button onclick="filter('all')" class="cat-btn active" id="cat-all">Tout</button>
+            <button onclick="filter('Power')" class="cat-btn" id="cat-Power">Chargeurs</button>
+            <button onclick="filter('Audio')" class="cat-btn" id="cat-Audio">Audio</button>
         </div>
         <div id="products-grid" class="grid grid-cols-2 md:grid-cols-4 gap-10"></div>
     </div>
   </div>
 
   <div id="support-view" class="view pt-32 px-8">
-    <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-24">
-            <h2 class="text-5xl md:text-7xl font-black italic uppercase tracking-tighter mb-4">SUPPORT HUB</h2>
-            <p class="text-gray-400 font-medium tracking-widest uppercase text-xs">Besoin d'assistance ? Choisissez un canal</p>
+    <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-6xl font-black italic uppercase mb-20 tracking-tighter">SUPPORT.</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <a href="https://wa.me/212771737049" class="p-12 bg-gray-50 rounded-[40px] border border-transparent hover:border-blue-600 transition">
+                <span class="text-4xl block mb-4">💬</span>
+                <p class="font-black uppercase text-xs tracking-widest">WhatsApp Direct</p>
+            </a>
+            <a href="https://instagram.com/shop._.maroc7" class="p-12 bg-gray-50 rounded-[40px] border border-transparent hover:border-purple-600 transition">
+                <span class="text-4xl block mb-4">📸</span>
+                <p class="font-black uppercase text-xs tracking-widest">Instagram</p>
+            </a>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-            <div class="contact-card">
-                <div class="text-4xl mb-6">💬</div>
-                <h4 class="font-black italic uppercase mb-2">Ventes Directes</h4>
-                <p class="text-gray-400 text-xs mb-8 leading-relaxed">Discutez avec un conseiller pour finaliser votre commande en direct.</p>
-                <a href="https://wa.me/212771737049" class="text-blue-600 font-black text-xs uppercase tracking-widest">Ouvrir WhatsApp →</a>
-            </div>
-            <div class="contact-card border-blue-600 border-2">
-                <div class="text-4xl mb-6">📸</div>
-                <h4 class="font-black italic uppercase mb-2">Instagram Feed</h4>
-                <p class="text-gray-400 text-xs mb-8 leading-relaxed">Suivez nos nouvelles arrivées et les feedbacks de nos clients VIP.</p>
-                <a href="https://instagram.com/shop._.maroc7" class="text-blue-600 font-black text-xs uppercase tracking-widest">Voir le Profil →</a>
-            </div>
-            <div class="contact-card">
-                <div class="text-4xl mb-6">🏷️</div>
-                <h4 class="font-black italic uppercase mb-2">Réclamations</h4>
-                <p class="text-gray-400 text-xs mb-8 leading-relaxed">Un problème avec votre colis ? Notre équipe SAV est là 7j/7.</p>
-                <span class="text-green-500 font-black text-[10px] uppercase tracking-widest">● Service Opérationnel</span>
-            </div>
-        </div>
-
-        <form id="contact-form" class="max-w-3xl mx-auto bg-gray-50 dark:bg-zinc-900 p-12 md:p-20 rounded-[60px] space-y-8 shadow-inner">
+        <form id="contact-form" class="bg-gray-50 p-10 md:p-20 rounded-[60px] text-left space-y-6">
             <input type="hidden" name="access_key" value="83029047-dab7-46d7-a0fa-cde6ca83dd8b">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <input type="text" name="name" placeholder="VOTRE NOM" required class="w-full p-6 rounded-3xl bg-white dark:bg-black border-none ring-1 ring-gray-100 dark:ring-white/10 outline-none focus:ring-blue-500 transition">
-                <input type="email" name="email" placeholder="VOTRE EMAIL" required class="w-full p-6 rounded-3xl bg-white dark:bg-black border-none ring-1 ring-gray-100 dark:ring-white/10 outline-none focus:ring-blue-500 transition">
-            </div>
-            <textarea name="message" placeholder="MESSAGE..." rows="6" required class="w-full p-6 rounded-3xl bg-white dark:bg-black border-none ring-1 ring-gray-100 dark:ring-white/10 outline-none focus:ring-blue-500 resize-none transition"></textarea>
-            <button type="submit" class="btn-apple w-full py-6 font-black uppercase tracking-[0.3em]">Envoyer Transmission</button>
-            <p id="form-log" class="text-center font-bold text-xs text-blue-600 mt-6"></p>
+            <input type="text" name="name" placeholder="Nom Complet" required class="w-full p-6 rounded-3xl border-none ring-1 ring-gray-100 outline-none focus:ring-blue-500">
+            <textarea name="message" placeholder="Votre message..." rows="5" required class="w-full p-6 rounded-3xl border-none ring-1 ring-gray-100 outline-none focus:ring-blue-500 resize-none"></textarea>
+            <button type="submit" class="btn-apple w-full py-6 font-black uppercase tracking-widest">Envoyer Message</button>
+            <p id="form-log" class="text-center font-bold text-xs text-blue-600 mt-4 uppercase"></p>
         </form>
     </div>
   </div>
@@ -178,8 +175,7 @@
       { id: 1, name: "Samsung 65W Trio", price: 75, category: "Power", img: "https://i.ibb.co/Xz9R7xY/white65w.jpg" },
       { id: 2, name: "Samsung 25W White", price: 50, category: "Power", img: "https://i.ibb.co/YyYhXzQ/white25w.jpg" },
       { id: 3, name: "Earbuds Crystal Pink", price: 95, category: "Audio", img: "https://i.ibb.co/fNb9V1L/pinkearbuds.jpg" },
-      { id: 4, name: "Samsung 25W Black", price: 50, category: "Power", img: "https://i.ibb.co/Xv9C63XF/samsung-25w-black.png" },
-      { id: 5, name: "Galaxy Watch S6", price: 290, category: "Watch", img: "https://via.placeholder.com/400?text=Galaxy+Watch" }
+      { id: 4, name: "Samsung 25W Black", price: 50, category: "Power", img: "https://i.ibb.co/Xv9C63XF/samsung-25w-black.png" }
     ];
 
     let cart = [];
@@ -195,27 +191,19 @@
     function closeAll() { toggleSidebar(false); toggleCart(false); }
     function toggleTheme() { document.getElementById('body').classList.toggle('dark-mode'); }
 
-    // نظام الفئات
-    function filterItems(cat) {
+    function filter(cat) {
         document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(`cat-${cat}`).classList.add('active');
-        
         const filtered = cat === 'all' ? productsDB : productsDB.filter(p => p.category === cat);
         render(filtered);
     }
 
     function render(data = productsDB) {
       document.getElementById('products-grid').innerHTML = data.map(p => `
-        <div class="bg-gray-50 dark:bg-zinc-900 p-8 rounded-[40px] border border-transparent hover:border-blue-600 transition cursor-pointer group" onclick="addToCart(${p.id})">
-          <div class="w-full h-48 flex items-center justify-center mb-6">
-              <img src="${p.img}" class="max-h-full object-contain group-hover:scale-110 transition duration-500">
-          </div>
-          <p class="text-blue-600 font-black text-[9px] uppercase tracking-widest mb-2">${p.category}</p>
+        <div class="product-card" onclick="addToCart(${p.id})">
+          <img src="${p.img}" class="w-full h-48 object-contain mb-6 hover:scale-110 transition duration-500">
           <h3 class="font-black italic text-xs uppercase mb-4">${p.name}</h3>
-          <div class="flex justify-between items-center">
-              <span class="text-xl font-black">${p.price} DH</span>
-              <div class="w-10 h-10 bg-white dark:bg-black rounded-full flex items-center justify-center shadow-sm">+</div>
-          </div>
+          <div class="text-blue-600 font-black text-xl">${p.price} DH</div>
         </div>`).join('');
     }
 
@@ -230,11 +218,10 @@
       document.getElementById('badge').innerText = cart.length;
       document.getElementById('badge').classList.toggle('hidden', cart.length === 0);
       document.getElementById('total-price').innerText = cart.reduce((s, i) => s + i.price, 0) + " DH";
-      const container = document.getElementById('cart-items');
-      container.innerHTML = cart.map((item, idx) => `
-        <div class="flex items-center gap-6 bg-gray-50 dark:bg-white/5 p-6 rounded-[30px]">
+      document.getElementById('cart-items').innerHTML = cart.map((item, idx) => `
+        <div class="flex items-center gap-6 bg-gray-50 p-6 rounded-[30px]">
           <img src="${item.img}" class="w-16 h-16 object-contain bg-white rounded-2xl">
-          <div class="flex-1 font-black text-[10px] uppercase italic leading-tight">${item.name}</div>
+          <div class="flex-1 font-black text-[10px] uppercase italic">${item.name}</div>
           <button onclick="cart.splice(${idx}, 1); updateCart();" class="text-red-500 font-bold text-2xl">&times;</button>
         </div>`).join('');
     }
@@ -246,9 +233,8 @@
 
     document.getElementById('contact-form').onsubmit = function(e) {
       e.preventDefault();
-      document.getElementById('form-log').innerText = "TRANSMISSION...";
       fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(this) })
-      .then(r => r.json()).then(d => { if(d.success) { document.getElementById('form-log').innerText = "TRANSMIS AVEC SUCCÈS ✅"; this.reset(); } });
+      .then(() => { document.getElementById('form-log').innerText = "ENVOYÉ AVEC SUCCÈS ✅"; this.reset(); });
     };
 
     window.onload = () => render();
