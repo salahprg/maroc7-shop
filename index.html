@@ -3,135 +3,228 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MARBOHA TECH | Premium Samsung Experience</title>
+  <title>MARBOHA TECH | Ultra Premium Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   
   <style>
     :root { --apple-blue: #0071e3; --ios-bg: #ffffff; --ios-text: #1d1d1f; }
-    .dark-mode { --ios-bg: #0b0b0b; --ios-text: #ffffff; }
+    .dark-mode { --ios-bg: #000000; --ios-text: #ffffff; }
 
-    body { font-family: 'Montserrat', sans-serif; background-color: var(--ios-bg); color: var(--ios-text); transition: 0.5s; margin: 0; overflow-x: hidden; }
+    body { font-family: 'Montserrat', sans-serif; background-color: var(--ios-bg); color: var(--ios-text); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); margin: 0; overflow-x: hidden; }
 
-    /* هيدر أبل الزجاجي */
+    /* شريط التمرير الأنيق */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(125, 125, 125, 0.3); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--apple-blue); }
+
+    /* 1. القائمة الجانبية */
+    #sidebar { 
+        position: fixed; top: 0; left: 0; width: 320px; height: 100%; 
+        background: rgba(var(--ios-bg), 0.85); backdrop-filter: blur(40px) saturate(200%);
+        z-index: 4000; transform: translateX(-100%); transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        border-right: 1px solid rgba(125, 125, 125, 0.1); padding: 40px; display: flex; flex-direction: column;
+    }
+    #sidebar.open { transform: translateX(0); box-shadow: 20px 0 60px rgba(0,0,0,0.1); }
+    .nav-item { display: flex; align-items: center; gap: 15px; padding: 15px; border-radius: 20px; transition: 0.3s; font-weight: 700; font-size: 13px; margin-bottom: 8px; text-align: left; width: 100%; }
+    .nav-item:hover { background: rgba(0, 113, 227, 0.1); color: var(--apple-blue); transform: translateX(5px); }
+
+    /* 2. الهيدر الذكي */
     .apple-nav { 
-      background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); 
+      background: rgba(var(--ios-bg), 0.7); backdrop-filter: blur(20px); 
       position: fixed; top: 0; width: 100%; z-index: 1000; height: 60px; 
-      display: flex; align-items: center; justify-content: space-between; padding: 0 24px;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
+      border-bottom: 1px solid rgba(125, 125, 125, 0.1);
     }
 
-    /* واجهة الهيرو مع الصورة الخاصة بك */
-    .hero-container {
-      height: 80vh; width: 100%; position: relative; display: flex; 
+    /* 3. واجهة الهيرو */
+    .hero-view {
+      height: 75vh; width: 100%; position: relative; display: flex; 
       align-items: center; justify-content: center; text-align: center;
       background: #000; overflow: hidden;
     }
-    .hero-image {
-      position: absolute; inset: 0; width: 100%; height: 100%; 
-      object-fit: cover; opacity: 0.7; /* تعتيم خفيف لتظهر النصوص */
-    }
-    .hero-content { z-index: 10; padding: 20px; }
-    .hero-title { 
-      font-size: clamp(3rem, 10vw, 7rem); font-weight: 900; color: #fff; 
-      text-transform: uppercase; font-style: italic; line-height: 0.9; letter-spacing: -2px;
-    }
-
-    /* أزرار الفئات */
-    .cat-btn { padding: 10px 20px; border-radius: 50px; font-size: 11px; font-weight: 800; text-transform: uppercase; border: 1px solid #eee; transition: 0.3s; }
-    .cat-btn.active { background: #000; color: #fff; border-color: #000; }
-
-    /* كروت المنتجات */
-    .p-card { background: #fff; border-radius: 35px; padding: 25px; transition: 0.5s; border: 1px solid #f2f2f2; cursor: pointer; }
-    .p-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.08); }
-
-    /* القوائم الجانبية */
-    #sidebar, #cart-drawer { position: fixed; top: 0; height: 100%; z-index: 4000; background: var(--ios-bg); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-    #sidebar { left: 0; width: 300px; transform: translateX(-100%); padding: 40px; box-shadow: 10px 0 40px rgba(0,0,0,0.1); }
-    #cart-drawer { right: 0; width: 350px; transform: translateX(100%); box-shadow: -10px 0 40px rgba(0,0,0,0.1); }
-    #sidebar.open, #cart-drawer.open { transform: translateX(0); }
+    .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6; transition: transform 10s ease; }
+    .hero-view:hover .hero-img { transform: scale(1.05); }
     
-    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); z-index: 3500; display: none; }
+    /* تأثير النيون ليد (Neon LED Glow) الأنيق والمضيء */
+    .hero-title { 
+      font-size: clamp(3rem, 10vw, 7rem); font-weight: 900; 
+      z-index: 10; font-style: italic; text-transform: uppercase; letter-spacing: -3px; 
+      color: #ffffff;
+      text-shadow: 
+        0 0 5px rgba(255, 255, 255, 0.8),
+        0 0 15px rgba(0, 113, 227, 0.9),
+        0 0 30px rgba(0, 113, 227, 0.7),
+        0 0 60px rgba(0, 113, 227, 0.5);
+      animation: neonPulse 2.5s infinite alternate ease-in-out; 
+    }
+    @keyframes neonPulse { 
+        0% { 
+          text-shadow: 
+            0 0 5px rgba(255, 255, 255, 0.8),
+            0 0 15px rgba(0, 113, 227, 0.9),
+            0 0 30px rgba(0, 113, 227, 0.7),
+            0 0 60px rgba(0, 113, 227, 0.5); 
+        } 
+        100% { 
+          text-shadow: 
+            0 0 2px rgba(255, 255, 255, 0.5),
+            0 0 10px rgba(0, 113, 227, 0.6),
+            0 0 20px rgba(0, 113, 227, 0.4),
+            0 0 40px rgba(0, 113, 227, 0.2); 
+        } 
+    }
+
+    /* 4. نظام الفئات */
+    .cat-btn { padding: 10px 25px; border-radius: 50px; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; border: 1px solid rgba(125, 125, 125, 0.1); }
+    .cat-btn.active { background: #000; color: #fff; border-color: #000; transform: scale(1.05); }
+    .dark-mode .cat-btn.active { background: #fff; color: #000; border-color: #fff; }
+
+    /* 5. مركز التواصل */
+    .contact-card { background: var(--ios-bg); border: 1px solid rgba(125, 125, 125, 0.1); border-radius: 35px; padding: 30px; transition: 0.4s; height: 100%; }
+    .contact-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+
+    /* 6. السلة الجانبية */
+    #cart-drawer { position: fixed; top: 0; right: 0; width: 380px; height: 100%; background: var(--ios-bg); z-index: 4000; transform: translateX(100%); transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); border-left: 1px solid rgba(125, 125, 125, 0.1); }
+    #cart-drawer.open { transform: translateX(0); box-shadow: -20px 0 60px rgba(0,0,0,0.2); }
+    
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); z-index: 3500; display: none; }
     .overlay.active { display: block; }
 
-    .btn-apple { background: var(--apple-blue); color: white; border-radius: 50px; padding: 16px 40px; font-weight: 900; transition: 0.3s; }
+    .view { display: none; width: 100%; min-height: 100vh; animation: iosSlide 0.6s ease; }
+    .view.active { display: block !important; }
+    @keyframes iosSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* إشعار إضافة منتج (Toast) */
+    #toast-notif {
+        position: fixed; top: 80px; left: 50%; transform: translate(-50%, -20px);
+        background: rgba(var(--ios-bg), 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(125, 125, 125, 0.2);
+        color: var(--ios-text); padding: 12px 24px; border-radius: 50px; z-index: 5000;
+        font-weight: 900; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1); opacity: 0; pointer-events: none; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #toast-notif.show { opacity: 1; transform: translate(-50%, 0); }
   </style>
 </head>
 <body id="body">
 
   <div class="overlay" id="overlay" onclick="closeAll()"></div>
+  
+  <div id="toast-notif">✅ Ajouté au sac</div>
 
   <div id="sidebar">
-    <div class="flex justify-between items-center mb-12">
-        <h3 class="font-black italic text-xl text-blue-600 uppercase">Playlist</h3>
-        <button onclick="closeAll()" class="text-3xl opacity-20">&times;</button>
+    <div class="flex justify-between items-center mb-10 px-4">
+        <h3 class="font-black italic text-xl text-blue-600">MT PLAYLIST</h3>
+        <button onclick="closeAll()" class="text-4xl opacity-20 hover:opacity-100 transition hover:rotate-90">&times;</button>
     </div>
-    <nav class="flex flex-col gap-6">
-        <button onclick="go('home-view'); closeAll()" class="text-left font-bold text-sm tracking-widest hover:text-blue-600 transition">🏠 ACCUEIL</button>
-        <button onclick="go('support-view'); closeAll()" class="text-left font-bold text-sm tracking-widest hover:text-blue-600 transition">🛠️ SUPPORT</button>
-        <div class="h-[1px] bg-gray-100 my-4"></div>
-        <p class="text-[10px] font-black text-gray-400 uppercase">WhatsApp Help</p>
-        <p class="font-bold">+212 771-737049</p>
+    <nav class="flex flex-col flex-1">
+        <button onclick="go('home-view'); closeAll()" class="nav-item">
+            <span>🏠</span> ACCUEIL PRINCIPAL
+        </button>
+        <button onclick="go('support-view'); closeAll()" class="nav-item">
+            <span>🛠️</span> CENTRE DE SUPPORT
+        </button>
+        
+        <div class="h-[1px] bg-gray-100 dark:bg-white/10 my-6"></div>
+        
+        <div class="px-4 mb-6">
+            <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-6">Catégories Rapides</p>
+            <button onclick="filterItems('all'); closeAll()" class="block text-left text-xs font-bold mb-5 hover:text-blue-600 hover:translate-x-2 transition-all w-full">📦 Tous les produits</button>
+            <button onclick="filterItems('Power'); closeAll()" class="block text-left text-xs font-bold mb-5 hover:text-blue-600 hover:translate-x-2 transition-all w-full">⚡ Chargeurs & Power</button>
+            <button onclick="filterItems('Audio'); closeAll()" class="block text-left text-xs font-bold mb-5 hover:text-blue-600 hover:translate-x-2 transition-all w-full">🎧 Audio & Earbuds</button>
+        </div>
+        
+        <div class="mt-auto p-6 bg-blue-50 dark:bg-blue-900/20 rounded-3xl hover:bg-blue-100 dark:hover:bg-blue-900/40 transition duration-300">
+            <p class="text-[9px] font-black text-blue-600 uppercase mb-2">Besoin d'aide ?</p>
+            <p class="text-xs font-bold">+212 771-737049</p>
+        </div>
     </nav>
   </div>
 
   <div id="cart-drawer" class="flex flex-col">
-    <div class="p-8 border-b flex justify-between items-center"><h3 class="font-black italic uppercase">Mon Panier</h3><button onclick="closeAll()">&times;</button></div>
-    <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
-    <div class="p-8 border-t bg-gray-50">
-        <div class="flex justify-between mb-6"><span class="opacity-50 font-bold">Total</span><span id="total-price" class="text-2xl font-black">0 DH</span></div>
-        <button onclick="checkout()" class="w-full btn-apple uppercase text-xs">Commander via WhatsApp</button>
+    <div class="p-8 border-b flex justify-between items-center"><h3 class="font-black italic text-xl">VOTRE SAC</h3><button onclick="closeAll()" class="text-4xl opacity-20 hover:opacity-100 transition hover:rotate-90">&times;</button></div>
+    <div id="cart-items" class="flex-1 overflow-y-auto p-8 space-y-6"></div>
+    <div class="p-10 border-t bg-gray-50 dark:bg-zinc-900 rounded-t-[50px]">
+        <div class="flex justify-between items-center mb-8"><span class="font-bold opacity-50 uppercase text-xs">Sous-total</span><span id="total-price" class="text-3xl font-black transition-all">0 DH</span></div>
+        <button onclick="checkout()" class="w-full py-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-black uppercase tracking-widest text-[10px] transition shadow-lg shadow-blue-500/30 hover:scale-105 active:scale-95">Commander</button>
     </div>
   </div>
 
-  <nav class="apple-nav">
-    <button onclick="toggleSidebar(true)" class="p-2">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/></svg>
+  <nav class="apple-nav px-8 flex items-center justify-between">
+    <button onclick="toggleSidebar(true)" class="p-2 hover:bg-gray-100 dark:hover:bg-white/5 rounded-2xl transition active:scale-90">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/></svg>
     </button>
     
-    <div onclick="go('home-view')" class="flex flex-col items-center cursor-pointer">
-        <span class="text-[8px] font-black tracking-[0.4em] opacity-40">MARBOHA</span>
-        <span class="text-xs font-black italic uppercase tracking-tighter">TECH</span>
+    <div onclick="go('home-view')" class="flex items-center gap-3 cursor-pointer absolute left-1/2 -translate-x-1/2 hover:opacity-80 transition">
+        <img src="https://ui-avatars.com/api/?name=MT&background=0071e3&color=fff&rounded=xl&font-size=0.4&bold=true" alt="Logo" class="w-7 h-7 object-contain rounded-lg shadow-md">
+        <div class="flex flex-col items-start leading-none">
+            <span class="text-xs font-black italic uppercase tracking-tighter mt-1">MARBOHA <span class="text-blue-600">TECH</span></span>
+        </div>
     </div>
 
-    <div class="flex items-center gap-4">
-        <button onclick="toggleTheme()" class="text-lg">🌓</button>
-        <button onclick="toggleCart(true)" class="relative p-2">
+    <div class="flex items-center gap-5">
+        <button onclick="toggleTheme()" class="text-xl hover:rotate-180 transition duration-500">🌓</button>
+        <button onclick="toggleCart(true)" class="relative p-2 hover:bg-gray-100 dark:hover:bg-white/5 rounded-2xl transition active:scale-90">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-            <span id="badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[8px] w-5 h-5 rounded-full flex items-center justify-center hidden font-black border-2 border-white">0</span>
+            <span id="badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[9px] w-5 h-5 rounded-full flex items-center justify-center hidden font-black border-2 border-white transition-transform scale-100">0</span>
         </button>
     </div>
   </nav>
 
-  <div id="home-view" class="view active">
-    <section class="hero-container">
-        <img src="Screenshot 2026-05-08 220005.jpg" class="hero-image" alt="Background">
-        <div class="hero-content">
-            <h1 class="hero-title">MARBOHA<br>TECH</h1>
-            <p class="text-white font-bold text-[10px] tracking-[0.8em] uppercase mt-6 opacity-80">Premium Experience</p>
-            <button onclick="document.getElementById('store').scrollIntoView({behavior:'smooth'})" class="mt-10 btn-apple uppercase text-[10px] tracking-widest">Voir le catalogue</button>
-        </div>
+  <div id="home-view" class="view active pt-10">
+    <section class="hero-view">
+        <img src="https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?auto=format&fit=crop&w=2000&q=80" class="hero-img" alt="Hero Watch">
+        <h1 class="hero-title">MARBOHA<br>TECH</h1>
     </section>
 
-    <div id="store" class="max-w-7xl mx-auto py-20 px-6">
-        <div class="flex gap-3 mb-12 overflow-x-auto pb-2">
-            <button onclick="filter('all')" class="cat-btn active" id="cat-all">Tout</button>
-            <button onclick="filter('Power')" class="cat-btn" id="cat-Power">Chargeurs</button>
-            <button onclick="filter('Audio')" class="cat-btn" id="cat-Audio">Audio</button>
+    <div id="catalog" class="max-w-7xl mx-auto py-24 px-8">
+        <div class="flex gap-4 mb-16 overflow-x-auto pb-4 no-scrollbar">
+            <button onclick="filterItems('all')" class="cat-btn active" id="cat-all">Tout</button>
+            <button onclick="filterItems('Power')" class="cat-btn" id="cat-Power">Chargeurs</button>
+            <button onclick="filterItems('Audio')" class="cat-btn" id="cat-Audio">Audio</button>
+            <button onclick="filterItems('Watch')" class="cat-btn" id="cat-Watch">Montres</button>
         </div>
-        <div id="products-grid" class="grid grid-cols-2 md:grid-cols-4 gap-8"></div>
+        <div id="products-grid" class="grid grid-cols-2 md:grid-cols-4 gap-10"></div>
     </div>
   </div>
 
-  <div id="support-view" class="view pt-24 px-6">
-    <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-5xl font-black italic uppercase mb-16 tracking-tighter">Support Client</h2>
-        <form id="contact-form" class="bg-gray-50 p-10 md:p-16 rounded-[50px] text-left space-y-6">
+  <div id="support-view" class="view pt-32 px-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-20">
+            <h2 class="text-5xl md:text-7xl font-black italic uppercase tracking-tighter mb-4">SUPPORT HUB</h2>
+            <p class="text-gray-400 font-bold uppercase text-[10px] tracking-widest">Assistance Technique & Ventes</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+            <div class="contact-card border-transparent hover:border-green-500 group">
+                <div class="text-4xl mb-6 group-hover:scale-110 transition">💬</div>
+                <h4 class="font-black italic uppercase mb-2">Ventes</h4>
+                <p class="text-gray-400 text-xs mb-8">Discutez avec nous pour passer commande.</p>
+                <a href="https://wa.me/212771737049" class="text-green-500 font-black text-xs uppercase tracking-widest">Ouvrir WhatsApp →</a>
+            </div>
+            <div class="contact-card border-transparent hover:border-purple-500 group">
+                <div class="text-4xl mb-6 group-hover:scale-110 transition">📸</div>
+                <h4 class="font-black italic uppercase mb-2">Social</h4>
+                <p class="text-gray-400 text-xs mb-8">Suivez nos nouveautés sur Instagram.</p>
+                <a href="https://instagram.com/shop._.maroc7" class="text-purple-500 font-black text-xs uppercase tracking-widest">Voir Profil →</a>
+            </div>
+            <div class="contact-card border-transparent hover:border-blue-500 group">
+                <div class="text-4xl mb-6 group-hover:scale-110 transition">🏷️</div>
+                <h4 class="font-black italic uppercase mb-2">Statut</h4>
+                <p class="text-gray-400 text-xs mb-8">Service client disponible 7j/7.</p>
+                <span class="text-blue-600 font-black text-[10px] uppercase tracking-widest">● DISPONIBLE</span>
+            </div>
+        </div>
+
+        <form id="contact-form" class="max-w-3xl mx-auto bg-gray-50 dark:bg-zinc-900 p-12 md:p-20 rounded-[60px] space-y-8">
             <input type="hidden" name="access_key" value="83029047-dab7-46d7-a0fa-cde6ca83dd8b">
-            <input type="text" name="name" placeholder="Nom" required class="w-full p-5 rounded-2xl border-none ring-1 ring-gray-100 outline-none">
-            <textarea name="message" placeholder="Votre message..." rows="5" required class="w-full p-5 rounded-2xl border-none ring-1 ring-gray-100 outline-none resize-none"></textarea>
-            <button type="submit" class="btn-apple w-full py-5 font-black uppercase text-xs">Envoyer Message</button>
-            <p id="form-log" class="text-center font-bold text-xs text-blue-600 mt-4"></p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <input type="text" name="name" placeholder="VOTRE NOM" required class="w-full p-6 rounded-3xl bg-white dark:bg-black border-2 border-transparent ring-1 ring-gray-100 dark:ring-white/10 outline-none focus:border-blue-500 focus:shadow-[0_0_15px_rgba(0,113,227,0.2)] transition-all">
+                <input type="email" name="email" placeholder="VOTRE EMAIL" required class="w-full p-6 rounded-3xl bg-white dark:bg-black border-2 border-transparent ring-1 ring-gray-100 dark:ring-white/10 outline-none focus:border-blue-500 focus:shadow-[0_0_15px_rgba(0,113,227,0.2)] transition-all">
+            </div>
+            <textarea name="message" placeholder="MESSAGE..." rows="6" required class="w-full p-6 rounded-3xl bg-white dark:bg-black border-2 border-transparent ring-1 ring-gray-100 dark:ring-white/10 outline-none focus:border-blue-500 focus:shadow-[0_0_15px_rgba(0,113,227,0.2)] resize-none transition-all"></textarea>
+            <button type="submit" id="submit-btn" class="w-full py-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-black uppercase tracking-widest transition hover:scale-105 active:scale-95 shadow-lg shadow-blue-500/30">Envoyer</button>
+            <p id="form-log" class="text-center font-bold text-xs text-blue-600 mt-6"></p>
         </form>
     </div>
   </div>
@@ -141,7 +234,8 @@
       { id: 1, name: "Samsung 65W Trio", price: 75, category: "Power", img: "https://i.ibb.co/Xz9R7xY/white65w.jpg" },
       { id: 2, name: "Samsung 25W White", price: 50, category: "Power", img: "https://i.ibb.co/YyYhXzQ/white25w.jpg" },
       { id: 3, name: "Earbuds Crystal Pink", price: 95, category: "Audio", img: "https://i.ibb.co/fNb9V1L/pinkearbuds.jpg" },
-      { id: 4, name: "Samsung 25W Black", price: 50, category: "Power", img: "https://i.ibb.co/Xv9C63XF/samsung-25w-black.png" }
+      { id: 4, name: "Samsung 25W Black", price: 50, category: "Power", img: "https://i.ibb.co/Xv9C63XF/samsung-25w-black.png" },
+      { id: 5, name: "Galaxy Watch Ultra", price: 290, category: "Watch", img: "https://via.placeholder.com/400?text=Galaxy+Watch" }
     ];
 
     let cart = [];
@@ -157,7 +251,7 @@
     function closeAll() { toggleSidebar(false); toggleCart(false); }
     function toggleTheme() { document.getElementById('body').classList.toggle('dark-mode'); }
 
-    function filter(cat) {
+    function filterItems(cat) {
         document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(`cat-${cat}`).classList.add('active');
         const filtered = cat === 'all' ? productsDB : productsDB.filter(p => p.category === cat);
@@ -166,10 +260,13 @@
 
     function render(data = productsDB) {
       document.getElementById('products-grid').innerHTML = data.map(p => `
-        <div class="p-card" onclick="addToCart(${p.id})">
-          <img src="${p.img}" class="w-full h-40 object-contain mb-4">
-          <h3 class="font-black italic text-[10px] uppercase mb-2">${p.name}</h3>
-          <div class="text-blue-600 font-black text-lg">${p.price} DH</div>
+        <div class="bg-gray-50 dark:bg-zinc-900 p-8 rounded-[40px] transition cursor-pointer text-center border border-transparent hover:border-blue-600 hover:-translate-y-2 group" onclick="addToCart(${p.id})">
+          <div class="h-40 flex items-center justify-center mb-6"><img src="${p.img}" class="max-h-full object-contain group-hover:scale-110 transition duration-500"></div>
+          <h3 class="font-black italic text-xs uppercase mb-2">${p.name}</h3>
+          <div class="flex justify-between items-center px-2">
+            <span class="text-blue-600 font-black text-lg">${p.price} DH</span>
+            <div class="w-8 h-8 rounded-full bg-white dark:bg-black text-gray-500 font-bold flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition shadow-sm">+</div>
+          </div>
         </div>`).join('');
     }
 
@@ -177,33 +274,67 @@
       const p = productsDB.find(x => x.id === id);
       cart.push(p);
       updateCart();
-      toggleCart(true);
+      showToast(); 
+      setTimeout(() => toggleCart(true), 600); 
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast-notif');
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); }, 2000);
     }
 
     function updateCart() {
-      document.getElementById('badge').innerText = cart.length;
-      document.getElementById('badge').classList.toggle('hidden', cart.length === 0);
+      const badge = document.getElementById('badge');
+      badge.innerText = cart.length;
+      badge.classList.toggle('hidden', cart.length === 0);
+      
+      badge.classList.add('scale-150');
+      setTimeout(() => badge.classList.remove('scale-150'), 200);
+
       document.getElementById('total-price').innerText = cart.reduce((s, i) => s + i.price, 0) + " DH";
-      document.getElementById('cart-items').innerHTML = cart.map((item, idx) => `
-        <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl">
-          <img src="${item.img}" class="w-12 h-12 object-contain bg-white rounded-lg">
+      
+      const container = document.getElementById('cart-items');
+      
+      if(cart.length === 0) {
+          container.innerHTML = `
+            <div class="flex flex-col items-center justify-center h-full text-center opacity-40 mt-12">
+                <span class="text-5xl mb-4">🛒</span>
+                <p class="font-black uppercase text-xs tracking-widest">Le sac est vide</p>
+            </div>`;
+          return;
+      }
+
+      container.innerHTML = cart.map((item, idx) => `
+        <div class="flex items-center gap-4 bg-gray-50 dark:bg-white/5 p-4 rounded-3xl transition hover:bg-gray-100 dark:hover:bg-white/10 group">
+          <img src="${item.img}" class="w-14 h-14 object-contain bg-white rounded-xl shadow-sm group-hover:scale-105 transition">
           <div class="flex-1 font-black text-[10px] uppercase italic">${item.name}</div>
-          <button onclick="cart.splice(${idx}, 1); updateCart();" class="text-red-500 font-bold">&times;</button>
+          <button onclick="cart.splice(${idx}, 1); updateCart();" class="text-gray-300 hover:text-red-500 font-bold text-3xl px-2 transition hover:rotate-90">&times;</button>
         </div>`).join('');
     }
 
     function checkout() {
+      if(cart.length === 0) return;
       const msg = encodeURIComponent(`Bonjour MARBOHA TECH, commande :\n` + cart.map(i => `- ${i.name}`).join('\n') + `\n\nTotal: ${document.getElementById('total-price').innerText}`);
       window.open(`https://wa.me/212771737049?text=${msg}`);
     }
 
     document.getElementById('contact-form').onsubmit = function(e) {
       e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      btn.innerText = "ENVOI EN COURS...";
       fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(this) })
-      .then(() => { document.getElementById('form-log').innerText = "ENVOYÉ ✅"; this.reset(); });
+      .then(r => r.json()).then(d => { 
+        if(d.success) { 
+            btn.innerText = "ENVOYÉ ✅";
+            btn.classList.add('bg-green-500');
+            setTimeout(() => { btn.innerText = "Envoyer"; btn.classList.remove('bg-green-500'); }, 3000);
+            this.reset(); 
+        } 
+      });
     };
 
-    window.onload = () => render();
+    window.onload = () => { render(); updateCart(); };
   </script>
 </body>
 </html>
